@@ -1,16 +1,19 @@
 <template>
     <section class="recipes">
-        <Recipe 
-        thumbnail="https://images.dailyhive.com/20201028135237/sugotoronto_119532360_649255475710285_1291059132088708725_n.jpg"
-        title="Delish!"
-        id="1"
-        previewText="yum yum!"/>
-
+        <Recipe
+        v-for="recipe in recipes"
+        :key="recipe.id" 
+        :thumbnail="recipe.thumbnail"
+        :title="recipe.title"
+        :id="recipe.id"
+        :previewText="recipe.previewText"
+        :description="recipe.description"/>
+<!-- 
         <Recipe 
         thumbnail="https://post.healthline.com/wp-content/uploads/2020/07/pizza-beer-1200x628-facebook-1200x628.jpg"
         title="Pizza!!!"
         id="2"
-        previewText="yum yum tasty!"/>
+        previewText="yum yum tasty!"/> -->
     </section>
 </template>
 
@@ -20,7 +23,33 @@ import Recipe from '@/components/Recipe'
 export default {
     components: {
         Recipe
-    }
+    },
+    asyncData() {
+        // return axios.get()
+        //since we are returning Nuxt will wait for this data to resolve
+        return new Promise ((resolve,reject) => {
+            setTimeout(() => {
+                resolve({
+                    recipes: [
+                        {
+                            id: "1",
+                            title: "Delish",
+                            preview: "yum yum",
+                            description: 'kjsdfklsdhjfkldjsklfjs memememe',
+                            thumbnail: "https://images.dailyhive.com/20201028135237/sugotoronto_119532360_649255475710285_1291059132088708725_n.jpg"
+                        },
+                        {
+                            id: "2",
+                            title: "Pizza",
+                            preview: "yum yum tasy",
+                            description: 'hsjkdhfjksdhfiusdhfjkhsdfjkhsdjkfhsjf IT ME!',
+                            thumbnail: "https://post.healthline.com/wp-content/uploads/2020/07/pizza-beer-1200x628-facebook-1200x628.jpg"
+                        }
+                    ]
+                })
+            }, 1500);
+        })
+    },
     
 }
 </script>
@@ -33,7 +62,10 @@ export default {
     justify-content: center;
     align-items: center;
 }
-
+a{
+    text-decoration: none;
+    color: black;
+}
 .recipe {
     box-sizing: border-box;
     width: 280px;
